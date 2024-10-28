@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task List</title>
+    <style>
+        body {
+            background-image: url("1img.jpg");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+        }
+        form {
+            background-color: antiquewhite;
+            width: 30%;
+            padding: 5%;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        div {
+            padding-left: 10%;
+            padding-right: 10%;
+            color: rgb(159, 87, 35);
+            font-family: cursive;
+            font-size: larger;
+        }
+        #taskList {
+            margin-top: 20px;
+            width: 30%;
+            list-style-type: none;
+            padding: 0;
+        }
+        .task {
+            background: rgba(255, 255, 255, 0.8);
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+            color:black;
+            font-size: larger;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .delete-btn {
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            padding: 5px 10px;
+        }
+    </style>
+</head>
+<body>
+    <form id="taskForm" onsubmit="addTask(event)">
+        <div>
+            <label for="taskInput">Enter your task</label><br>
+            <input type="text" id="taskInput" required>
+            <input type="submit" value="Add Task">
+        </div>
+    </form>
+    <ul id="taskList"></ul>
+
+    <script>
+        function addTask(event) {
+            event.preventDefault(); // Prevent form submission
+
+            const taskInput = document.getElementById('taskInput');
+            const taskValue = taskInput.value;
+
+            if (taskValue) {
+                const taskList = document.getElementById('taskList');
+                const listItem = document.createElement('li');
+                listItem.className = 'task';
+                
+                // Create a span for the task text
+                const taskText = document.createElement('span');
+                taskText.textContent = taskValue;
+                
+                // Create a delete button
+                const deleteBtn = document.createElement('button');
+                deleteBtn.textContent = 'Delete';
+                deleteBtn.className = 'delete-btn';
+                deleteBtn.onclick = function() {
+                    taskList.removeChild(listItem); // Remove the task
+                };
+
+                // Append text and button to list item
+                listItem.appendChild(taskText);
+                listItem.appendChild(deleteBtn);
+                taskList.appendChild(listItem);
+                taskInput.value = ''; // Clear the input
+            }
+        }
+    </script>
+</body>
+</html>
