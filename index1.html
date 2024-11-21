@@ -41,20 +41,27 @@
             margin: 5px 0;
             padding: 10px;
             border-radius: 5px;
-            color:black;
+            color: black;
             font-size: larger;
             font-family: Georgia, 'Times New Roman', Times, serif;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        .delete-btn {
-            background-color: red;
-            color: white;
+        .delete-btn, .edit-btn {
+            margin-left: 10px;
+            padding: 5px 10px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            padding: 5px 10px;
+        }
+        .delete-btn {
+            background-color: red;
+            color: white;
+        }
+        .edit-btn {
+            background-color: rgba(255, 98, 0, 0.76);
+            color: white;
         }
     </style>
 </head>
@@ -70,7 +77,7 @@
 
     <script>
         function addTask(event) {
-            event.preventDefault(); // Prevent form submission
+            event.preventDefault();
 
             const taskInput = document.getElementById('taskInput');
             const taskValue = taskInput.value;
@@ -79,24 +86,37 @@
                 const taskList = document.getElementById('taskList');
                 const listItem = document.createElement('li');
                 listItem.className = 'task';
-                
-                // Create a span for the task text
+
                 const taskText = document.createElement('span');
                 taskText.textContent = taskValue;
-                
-                // Create a delete button
+
                 const deleteBtn = document.createElement('button');
                 deleteBtn.textContent = 'Delete';
                 deleteBtn.className = 'delete-btn';
                 deleteBtn.onclick = function() {
-                    taskList.removeChild(listItem); // Remove the task
+                    taskList.removeChild(listItem);
                 };
 
-                // Append text and button to list item
+                const editBtn = document.createElement('button');
+                editBtn.textContent = 'Edit';
+                editBtn.className = 'edit-btn';
+                editBtn.onclick = function() {
+                    editTask(taskText);
+                };
+
                 listItem.appendChild(taskText);
+                listItem.appendChild(editBtn);
                 listItem.appendChild(deleteBtn);
                 taskList.appendChild(listItem);
-                taskInput.value = ''; // Clear the input
+
+                taskInput.value = '';
+            }
+        }
+
+        function editTask(taskText) {
+            const newTask = prompt("Edit your task:", taskText.textContent);
+            if (newTask !== null && newTask.trim() !== "") {
+                taskText.textContent = newTask.trim();
             }
         }
     </script>
